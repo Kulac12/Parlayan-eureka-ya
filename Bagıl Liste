@@ -1,0 +1,78 @@
+/*
+Soru: Öğrencilere ait no, ad, soyad, vize ve genel sınav notlarının tutulduğu 
+tek yönlü bağıl liste tanımlayınız. 
+Bu liste üzerinde arama, silme, ekleme, listeleme vb. işlemleri gerçekleştiren 
+metotları yazınız.
+
+ */
+package baglılisteyapısı;
+class Ogrenci{
+    int no;
+    String ad;
+    String soyad;
+    int vize;
+    int genel;
+    Ogrenci sonraki; 
+
+    public Ogrenci(int no, String ad, String soyad, int vize, int genel) {
+        this.no = no;
+        this.ad = ad;
+        this.soyad = soyad;
+        this.vize = vize;
+        this.genel = genel;
+        sonraki=null;
+    }
+}
+public class BaglıListeYapısı {
+    Ogrenci ilk=null;
+    Ogrenci son=null;
+    public void BasaEkle(int no, String ad, String soyad, int vize, int genel){
+        Ogrenci ogr1=new Ogrenci(no, ad, soyad, vize, genel);
+        if(son==null){
+            ilk=ogr1;
+            son=ogr1;
+        }
+        else{
+            ogr1.sonraki=ilk;
+            ilk=ogr1;
+        }
+    }
+    public void SonaEkle (int no, String ad, String soyad, int vize, int genel){
+        Ogrenci ogr1=new Ogrenci(no, ad, soyad, vize, genel);
+        if(son==null){
+            ilk=ogr1;
+            son=ogr1;
+        }else{
+            son.sonraki=ogr1;
+            son=ogr1;
+        }
+    }
+    public int OgrenciSayısı(){
+        int ogr_say=0;
+        Ogrenci gecici=ilk;
+        while (gecici != null) {
+            gecici=gecici.sonraki;
+            ogr_say ++;
+        }
+        return ogr_say;
+    }
+    public void ArayaEkle(int no, String ad, String soyad, int vize, int genel, int sira){
+        Ogrenci ogr1=new Ogrenci(no, ad, soyad, vize, genel); //ogrenci sınıfından nesne tanımladık
+        int ogr_say=OgrenciSayısı(); //listedeki öğrenci sayısı
+        int j=1; //gezilen elemanın sırasını göstermektedir
+        Ogrenci gecici=ilk;
+        if(sira <=ogr_say){  // kullanıcıdan aldığımız sıra listenin içinde mi
+            while(gecici !=null){ // gecici değeri null eşit olmadığı sürece çalışsın
+                if(j==sira){
+                    ogr1.sonraki=gecici.sonraki;
+                    gecici.sonraki=ogr1;
+                }
+                gecici=gecici.sonraki;
+                j++;
+            }
+        }else{
+            System.out.println("Araya ekleme yapılamıyor...");
+        }
+        
+    }
+    
